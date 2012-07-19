@@ -51,3 +51,7 @@ use HyperDB & MySQL master/slave replication
 http://wordpress.org/extend/plugins/hyperdb/installation/
 http://dev.mysql.com/doc/refman/5.1/en/replication-howto.html
 
+## File a Bug
+
+To file a bug against Cloud Foundry Open Source and its components, sign up and use our bug tracking system: [http://cloudfoundry.atlassian.net](http://cloudfoundry.atlassian.net)
+

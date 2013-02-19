@@ -1,5 +1,5 @@
 user  root root;
-worker_processes  <%= properties.nginx.workers || 1 %>;
+worker_processes  <%= p("nginx.workers") %>;
 
 error_log /var/vcap/sys/log/nginx/nginx.error.log;
 pid       /var/vcap/sys/run/nginx/nginx.pid;
@@ -39,14 +39,14 @@ http {
   client_max_body_size 256M;
 
   upstream wordpress {
-  <% properties.wordpress.servers.each do |server| %>
-    server <%= server %>:<%= properties.wordpress.port %>;
+  <% p("wordpress.servers").each do |server| %>
+    server <%= server %>:<%= p("wordpress.port") %>;
   <% end %>
   }
 
   server {
     listen       80;
-    server_name  "<%= properties.wordpress.servername %>";
+    server_name  "<%= p("wordpress.servername") %>";
     server_name_in_redirect off;
 
     location / {

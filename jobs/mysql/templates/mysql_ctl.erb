@@ -26,15 +26,15 @@ case $1 in
 
     $SERVER start /var/vcap/jobs/mysql/config/my.cnf
 
-    <% password = properties.mysql.password %>
+    <% password = p("mysql.password") %>
 
     echo "creating database"
-    <% dbname = properties.wordpress.db.name %>
+    <% dbname = p("wordpress.db.name") %>
     mysql -u root --password='<%= password %>' -S $SOCKET \
       -e "CREATE DATABASE <%= dbname %>;" mysql
 
-    <% dbuser = "'#{properties.wordpress.db.user}'@'%'" %>
-    <% dbpass = properties.wordpress.db.pass %>
+    <% dbuser = "'#{p("wordpress.db.user")}'@'%'" %>
+    <% dbpass = p("wordpress.db.pass") %>
 
     echo "creating user"
     mysql -u root --password='<%= password %>' -S $SOCKET \

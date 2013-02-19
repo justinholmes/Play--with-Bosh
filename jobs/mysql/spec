@@ -10,3 +10,19 @@ templates:
 packages:
   - mysqlclient
   - mysql
+
+properties:
+  mysql.password:
+    description: Password for the MySQL root user
+  mysql.port:
+    description: TCP port MySQL listens on
+    default: 3306
+  mysql.production:
+    description: Use production optimized MySQL directives (Boolean)
+    default: false
+  wordpress.db.name:
+    description: Wordpress database name (it will be created during the startup process)
+  wordpress.db.user:
+    description: Username wordpress must use to access MySQL
+  wordpress.db.pass:
+    description: Password wordpress must use to access MySQL

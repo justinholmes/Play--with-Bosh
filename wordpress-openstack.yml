@@ -21,7 +21,7 @@ update:
   max_errors: 1
 
 networks:
-  - name: elastic
+  - name: floating
     type: vip
     cloud_properties: {}
   - name: default
@@ -36,11 +36,9 @@ resource_pools:
     size: 4
     stemcell:
       name: bosh-stemcell
-      version: 0.6.7 # CHANGE: Stemcell version
+      version: latest
     cloud_properties:
       instance_type: m1.small
-      availability_zone:
-      key_name:
 
 jobs:
   - name: mysql
@@ -50,9 +48,7 @@ jobs:
     networks:
       - name: default
         default: [dns, gateway]
-      - name: elastic
-        static_ips:
-        - 192.168.1.226 # CHANGE: Floating IP 1
+
   - name: nfs
     template: debian_nfs_server
     instances: 1
@@ -60,9 +56,7 @@ jobs:
     networks:
       - name: default
         default: [dns, gateway]
-      - name: elastic
-        static_ips:
-        - 192.168.1.227 # CHANGE: Floating IP 2
+
   - name: wordpress
     template: wordpress
     instances: 1
@@ -70,9 +64,7 @@ jobs:
     networks:
       - name: default
         default: [dns, gateway]
-      - name: elastic
-        static_ips:
-        - 192.168.1.228 # CHANGE: Floating IP 3
+
   - name: nginx
     template: nginx
     instances: 1
@@ -80,26 +72,27 @@ jobs:
     networks:
       - name: default
         default: [dns, gateway]
-      - name: elastic
+      - name: floating
         static_ips:
-        - 192.168.1.229 # CHANGE: Floating IP 4
+        - 192.168.1.226 # CHANGE: Floating IP 1
 
 properties:
+  env:
+
   mysql:
-    address: 192.168.1.226 # CHANGE: Floating IP 1
-    port: 3306
+    address: 0.mysql.default.wordpress.microbosh
     password: rootpass
+
   nfs_server:
-    address: 192.168.1.227 # CHANGE: Floating IP 2
-    network: 192.168.1.228/255.255.255.255 # CHANGE: Floating IP 3
-  debian_nfs_server:
-    no_root_squash: true
+    address: 0.nfs.default.wordpress.microbosh
+    network: *.wordpress.microbosh
+    idmapd_domain: novalocal
+
   wordpress:
     admin: foo@bar.com
-    port: 8008
     servers:
-      - 192.168.1.228 # CHANGE: Floating IP 3
-    servername: 192.168.1.229 # CHANGE: Floating IP 4
+      - 0.wordpress.default.wordpress.microbosh
+    servername: 192.168.1.226 # CHANGE: Floating IP 1
     db:
       name: wp
       user: wordpress
@@ -112,5 +105,3 @@ properties:
     secure_auth_salt: random key
     logged_in_salt: random key
     nonce_salt: random key
-   nginx:
-    workers: 1

@@ -39,7 +39,7 @@ PidFile "/var/vcap/sys/run/apache2/httpd.pid"
 # prevent Apache from glomming onto all bound IP addresses.
 #
 #Listen 12.34.56.78:80
-Listen <%= properties.wordpress.port %>
+Listen <%= p("wordpress.port") %>
 
 #
 # Dynamic Shared Object (DSO) Support
@@ -91,7 +91,7 @@ Group vcap
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin <%= properties.wordpress.admin %>
+ServerAdmin <%= p("wordpress.admin") %>
 
 #
 # ServerName gives the name and port that the server uses to identify itself.
@@ -101,7 +101,7 @@ ServerAdmin <%= properties.wordpress.admin %>
 # If your host doesn't have a registered DNS name, enter its IP address here.
 #
 #ServerName www.example.com:80
-ServerName <%= properties.wordpress.servername %>
+ServerName <%= p("wordpress.servername") %>
 
 #
 # DocumentRoot: The directory out of which you will serve your

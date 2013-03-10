@@ -91,7 +91,7 @@ properties:
     admin: foo@bar.com
     servers:
       - 0.wordpress.default.wordpress.microbosh
-    servername: # CHANGE: Elastic IP 1
+    servername: 107.21.118.225 # CHANGE: Elastic IP 1
     db:
       name: wp
       user: wordpress

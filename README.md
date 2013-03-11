@@ -4,7 +4,7 @@ This is a sample release repository for [BOSH](https://github.com/cloudfoundry/b
 
 ### Deploy
 
-To deploy the sample application edit the example deployment manifest (wordpress-*your-IaaS*.yml) and adapt it with your data. Then use the following command sequence:
+To deploy the sample application edit the example deployment manifest (located at the /examples directory) and adapt it with your data. Then use the following command sequence:
 
     bosh upload release releases/wordpress-2.yml
     bosh deployment <wordpress deployment manifest>

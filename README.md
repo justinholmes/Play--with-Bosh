@@ -1,6 +1,6 @@
 ## BOSH Sample Release
 
-This is a sample release repository for [BOSH](https://github.com/cloudfoundry/bosh) that deploys a three tier LAMP application: a wordpress blog which consists of a number of apache servers running php & wordpress, fronted by nginx, and using one mysql database for storage.
+This is a sample for [BOSH](https://github.com/cloudfoundry/bosh) that deploys a three tier Play! application: a play blog app which consists of a number of play servers, fronted by nginx, and using one mysql database for storage.
 
 ### Deploy
 

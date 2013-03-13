@@ -8,7 +8,7 @@ echo "Extracting headers-more module..."
 tar xzf nginx/headers-more-v0.15rc1.tgz
 
 echo "Extracting nginx..."
-tar xzf nginx/nginx-1.0.11.tar.gz
+tar xzf nginx/nginx-1.3.14.tar.gz
 
 echo "Building nginx..."
 (

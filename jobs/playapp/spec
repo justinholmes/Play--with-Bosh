@@ -1,0 +1,8 @@
+---
+name: playapp
+
+packages:
+   - playapp
+
+templates:
+   play_ctl: bin/play_ctl 

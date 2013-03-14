@@ -1,5 +1,5 @@
 ---
-name: wordpress
+name: playapp
 
 files:
-  - wordpress/wordpress-3.3.1.tgz
+  - playapp/testapp-1.0-SNAPSHOT.zip

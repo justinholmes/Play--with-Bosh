@@ -1,0 +1,5 @@
+check process playapp
+  with pidfile /var/vcap/sys/run/playapp/playapp.pid
+  start program "/var/vcap/jobs/playapp/bin/play_ctl start" with timeout 60 seconds
+  stop program "/var/vcap/jobs/playapp/bin/play_ctl stop" with timeout 60 seconds
+  group vcap

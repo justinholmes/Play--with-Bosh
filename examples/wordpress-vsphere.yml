@@ -1,10 +1,10 @@
 ---
-name: wordpress
-director_uuid: 74cee69e-2cd8-4c99-96c8-f332e4967021
+name: playapp
+director_uuid: 1d186757-4ab4-4eba-b3e6-0d73322901b1
 
 release:
-  name: wordpress
-  version: 3
+  name: play
+  version: 0.18-dev
 
 compilation:
   workers: 4
@@ -26,59 +26,48 @@ networks:
   - name: default
     subnets:
     - reserved:
-      - 172.31.220.2 - 172.31.220.10
-      - 172.31.223.200 - 172.31.223.254
+      - 172.16.29.2 - 172.16.29.10
       static:
-      - 172.31.220.11 - 172.31.220.100
-      range: 172.31.220.0/22
-      gateway: 172.31.220.1
+      - 172.16.29.11 - 172.16.29.100
+      range: 172.16.29.0/22
+      gateway: 172.16.29.1
       dns:
-      - 172.30.22.153
-      - 172.30.22.154
+      - 8.8.8.8
+      - 8.4.4.4
       cloud_properties:
-        name: VLAN2220
-  - name: dmz
-    subnets:
-    - static:
-      - 172.28.5.209 - 172.28.5.210
-      range: 172.28.5.208/28
-      dns:
-      - 172.22.22.153
-      - 172.22.22.154
-      cloud_properties:
-        name: VLAN3093
-
+        name: VM Network
+  
 resource_pools:
   - name: infrastructure
     network: default
     size: 6
     stemcell:
       name: bosh-stemcell
-      version: 0.4.6
+      version: 0.8.0
     cloud_properties:
       cpu: 1
       disk: 8192
       ram: 4096
 
 jobs:
-  - name: mysql
-    template: mysql
+  # - name: mysql
+  #   template: mysql
+  #   instances: 1
+  #   resource_pool: infrastructure
+  #   persistent_disk: 16384
+  #   networks:
+  #   - name: default
+  #     static_ips:
+  #     - 172.16.29.20
+
+  - name: play
+    template: playapp
     instances: 1
     resource_pool: infrastructure
-    persistent_disk: 16384
     networks:
     - name: default
       static_ips:
-      - 172.31.220.20
-
-  - name: wordpress
-    template: wordpress
-    instances: 4
-    resource_pool: infrastructure
-    networks:
-    - name: default
-      static_ips:
-      - 172.31.220.30 - 172.31.220.33
+      - 172.16.29.30 # - 172.16.29.33
 
   - name: nginx
     template: nginx
@@ -88,39 +77,30 @@ jobs:
     - name: default
       default: [dns, gateway]
       static_ips:
-        - 172.31.220.40
-    - name: dmz
-      static_ips:
-        - 172.28.5.209
-
+        - 172.16.29.40 #- 172.32.220.41
+    
 properties:
 
-  wordpress:
-    admin: foo@bar.com
-    port: 8008
-    servers:
-      - 172.31.220.30
-      - 172.31.220.31
-      - 172.31.220.32
-      - 172.31.220.33
-    servername: wp.appcloud14.dev.mozycloud.com
-    db:
-      name: wp
-      user: wordpress
-      pass: w0rdpr3ss
-    auth_key: random key
-    secure_auth_key: random key
-    logged_in_key: random key
-    nonce_key: random key
-    auth_salt: random key
-    secure_auth_salt: random key
-    logged_in_salt: random key
-    nonce_salt: random key
+  play:
+  #   admin: foo@bar.com
+     port: 9000
+     servers:
+       - 172.16.29.30
+  #     # - 172.16.29.31
+  #     # - 172.16.29.32
+  #     # - 172.16.29.33
+     servername: playtest.test
+  #   db:
+  #     name: wp
+  #     user: wordpress
+  #     pass: w0rdpr3ss
 
-  mysql:
-    address: 172.31.220.20
-    port: 3306
-    password: rootpass
+  # mysql:
+  #   address: 172.16.29.20
+  #   port: 3306
+  #   password: rootpass
 
   nginx:
     workers: 1
+
+

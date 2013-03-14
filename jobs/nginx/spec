@@ -13,10 +13,12 @@ properties:
   nginx.workers:
     description: Number of nginx worker processes
     default: 1
-  play.servername:
-    description: Name of the virtual server
-  play.port:
-    description: TCP port upstream (backends) servers listen on
-    default: 9000
+  
   play.servers:
-    description: Array of upstream (backends) servers
+    description: upstream servers
+
+  play.port:
+    description: play port
+
+  play.servername:
+    description: server name of cluster
